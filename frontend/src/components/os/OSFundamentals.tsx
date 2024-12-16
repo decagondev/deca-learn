@@ -1,5 +1,6 @@
 import { ReactElement, useState } from 'react';
-import { Linux, Terminal, FileText, Settings } from 'lucide-react';
+import { Terminal, FileText, Settings } from 'lucide-react';
+import { FaLinux } from 'react-icons/fa';
 
 interface OSComponent {
   name: string;
@@ -28,7 +29,7 @@ const osComponents: OSComponent[] = [
   },
   {
     name: 'Memory Management',
-    icon: <Linux className="w-6 h-6" />,
+    icon: <FaLinux className="w-6 h-6" />,
     description: 'Managing the allocation and deallocation of memory for processes.',
     topics: [
       { name: 'Virtual Memory', details: 'Paging, segmentation, etc.' },
@@ -79,7 +80,7 @@ const OSFundamentals = (): ReactElement => {
     <div className="container mx-auto p-4 max-w-4xl">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="bg-gray-100 p-4 border-b flex items-center">
-          <Linux className="mr-2 w-8 h-8 text-blue-600" />
+          <FaLinux className="mr-2 w-8 h-8 text-blue-600" />
           <h2 className="text-2xl font-bold text-gray-800">Operating Systems Fundamentals</h2>
         </div>
 
