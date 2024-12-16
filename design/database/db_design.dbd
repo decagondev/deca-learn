@@ -1,0 +1,93 @@
+Table users {
+    user_id SERIAL [pk]
+    username VARCHAR(50) [unique, not null]
+    email VARCHAR(100) [unique, not null]
+    password_hash VARCHAR(255) [not null]
+    created_at TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+    last_login TIMESTAMP
+    profile_picture_url TEXT
+    total_xp INTEGER [default: 0]
+    current_level INTEGER [default: 1]
+}
+
+Table user_achievements {
+    achievement_id SERIAL [pk]
+    user_id INTEGER [ref: > users.user_id]
+    module_name VARCHAR(100) [not null]
+    achievement_type VARCHAR(50) [not null]
+    achieved_at TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+    xp_earned INTEGER [not null]
+}
+
+Table learning_modules {
+    module_id SERIAL [pk]
+    module_name VARCHAR(100) [not null]
+    module_category VARCHAR(50) [not null]
+    description TEXT
+    difficulty_level INTEGER [not null]
+    estimated_time_hours NUMERIC(5,2)
+    is_active BOOLEAN [default: true]
+}
+
+Table user_module_progress {
+    progress_id SERIAL [pk]
+    user_id INTEGER [ref: > users.user_id]
+    module_id INTEGER [ref: > learning_modules.module_id]
+    started_at TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+    completed_at TIMESTAMP
+    current_section VARCHAR(100)
+    progress_percentage NUMERIC(5,2) [default: 0]
+    indexes {
+      (user_id, module_id)
+    }
+}
+
+Table challenges {
+    challenge_id SERIAL [pk]
+    module_id INTEGER [ref: > learning_modules.module_id]
+    challenge_name VARCHAR(100) [not null]
+    description TEXT
+    difficulty INTEGER [not null]
+    points_reward INTEGER [not null]
+    type VARCHAR(50) [not null]
+    solution_method TEXT
+    is_active BOOLEAN [default: true]
+}
+
+Table challenge_attempts {
+    attempt_id SERIAL [pk]
+    user_id INTEGER [ref: > users.user_id]
+    challenge_id INTEGER [ref: > challenges.challenge_id]
+    attempted_at TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+    is_successful BOOLEAN [default: false]
+    time_taken INTERVAL
+    submission_details JSONB
+}
+
+Table leaderboard {
+    leaderboard_id SERIAL [pk]
+    user_id INTEGER [ref: > users.user_id]
+    total_xp INTEGER [not null]
+    total_challenges_solved INTEGER [default: 0]
+    rank INTEGER
+    last_updated TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+}
+
+Table learning_resources {
+    resource_id SERIAL [pk]
+    module_id INTEGER [ref: > learning_modules.module_id]
+    title VARCHAR(200) [not null]
+    resource_type VARCHAR(50) [not null]
+    url TEXT
+    description TEXT
+    difficulty_level INTEGER [not null]
+}
+
+Table user_notifications {
+    notification_id SERIAL [pk]
+    user_id INTEGER [ref: > users.user_id]
+    message TEXT [not null]
+    notification_type VARCHAR(50) [not null]
+    is_read BOOLEAN [default: false]
+    created_at TIMESTAMP [default: "CURRENT_TIMESTAMP"]
+}
