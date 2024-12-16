@@ -77,7 +77,7 @@ const OSFundamentals = (): ReactElement => {
   const [activeComponent, setActiveComponent] = useState<OSComponent>(osComponents[0]);
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto p-4 max-w-6xl">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="bg-gray-100 p-4 border-b flex items-center">
           <FaLinux className="mr-2 w-8 h-8 text-blue-600" />
